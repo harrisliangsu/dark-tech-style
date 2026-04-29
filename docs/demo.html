@@ -3,271 +3,262 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VectorDB Cloud · Architecture Overview</title>
+  <title>Tessera · 6-stage release pipeline</title>
   <link rel="stylesheet" href="../assets/tokens.css"/>
 </head>
 <body>
 
   <nav class="nav">
-    <div class="nav-logo"><span>Vector</span>DB Cloud</div>
+    <div class="nav-logo"><span>Tessera</span> Pipeline</div>
     <div class="nav-links">
-      <a href="#vision">Overview</a>
-      <a href="#pillars">Design</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#metrics">Metrics</a>
+      <a href="#flow">Pipeline</a>
+      <a href="#maturity">Maturity</a>
+      <a href="#roadmap">Roadmap</a>
     </div>
   </nav>
 
   <div class="hero">
     <div class="hero-badge">
       <span class="dot"></span>
-      Architecture Overview · v2.4
+      Engineering · v3 · L3 maturity
     </div>
     <h1>
-      <span class="grad-orange">Sub-millisecond</span> vector search<br/>
-      at billion-scale.
+      Six gates between<br/>
+      a <span class="grad-orange">commit</span> and <span class="grad-green">production</span>.
     </h1>
     <p class="hero-desc">
-      A managed vector database for retrieval-augmented generation.
-      Hybrid HNSW + IVF index, GPU-accelerated reranking, multi-tenant isolation,
-      and a wire-compatible Postgres protocol — so your existing client just works.
+      Tessera is the deployment harness that runs every change through a fixed sequence of
+      hard-coded gates. No retroactive approvals, no "we'll fix it later", no human in the
+      hot path. The only way out is forward.
     </p>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-val grad-orange">1.2B</div>
-        <div class="hero-stat-label">vectors / shard</div>
+        <div class="hero-stat-val grad-orange">6</div>
+        <div class="hero-stat-label">gates</div>
       </div>
       <div>
-        <div class="hero-stat-val grad-blue">0.8ms</div>
-        <div class="hero-stat-label">p50 latency</div>
+        <div class="hero-stat-val grad-blue">11.4 min</div>
+        <div class="hero-stat-label">median commit-to-prod</div>
       </div>
       <div>
-        <div class="hero-stat-val grad-green">99.99%</div>
-        <div class="hero-stat-label">availability SLO</div>
+        <div class="hero-stat-val grad-green">99.7%</div>
+        <div class="hero-stat-label">first-pass rate</div>
       </div>
       <div>
-        <div class="hero-stat-val grad-purple">12</div>
-        <div class="hero-stat-label">global regions</div>
+        <div class="hero-stat-val grad-purple">L3</div>
+        <div class="hero-stat-label">harness maturity</div>
       </div>
     </div>
   </div>
 
-  <div class="section" id="vision">
+  <!-- ═══ Pipeline: horizontal flow with arrows ═══ -->
+  <div class="section" id="flow">
     <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-orange);">DESIGN PRINCIPLES</div>
-      <div class="section-title">Four ideas behind the system</div>
-      <div class="section-subtitle center">Every architectural decision in VectorDB Cloud traces back to one of these four principles.</div>
+      <div class="section-label" style="color: var(--accent-orange);">SIX-STAGE PIPELINE</div>
+      <div class="section-title">Every change walks the same path.</div>
+      <div class="section-subtitle center">Each stage owns one decision. The gate either lets the change through or sends it back — never sideways.</div>
     </div>
-    <div class="grid-2">
-      <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-orange);"></div>
-          <div style="font-weight:700; font-size:15px;">Storage-compute separation</div>
-        </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Indexes live in object storage. Query nodes are stateless and scale on demand.
-          A 10x traffic spike rents 10x query nodes, not 10x storage.
+    <div class="flow-container" style="margin-top: 32px;">
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-orange); background: var(--accent-orange-dim); padding:2px 8px; border-radius:4px;">G1</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-orange-dim); color: var(--accent-orange); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">1</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Lint &amp; type</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">Static</div>
         </div>
       </div>
-      <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-blue);"></div>
-          <div style="font-weight:700; font-size:15px;">Hybrid index by default</div>
-        </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          HNSW for recall, IVF for memory efficiency, picked per-collection by the planner.
-          You don't tune knobs — the system does.
-        </div>
-      </div>
-      <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-green);"></div>
-          <div style="font-weight:700; font-size:15px;">Postgres on the wire</div>
-        </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Speak the Postgres protocol. Use pgvector syntax. Existing libraries, ORMs, and
-          observability tooling work without changes.
+      <div class="flow-arrow">→</div>
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-blue); background: var(--accent-blue-dim); padding:2px 8px; border-radius:4px;">G2</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-blue-dim); color: var(--accent-blue); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">2</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Unit tests</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">≥ 80% cov</div>
         </div>
       </div>
-      <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-purple);"></div>
-          <div style="font-weight:700; font-size:15px;">Multi-tenant by design</div>
-        </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Namespace isolation is a first-class primitive — not an afterthought.
-          One control plane safely runs ten thousand customers.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="architecture">
-    <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-blue);">SYSTEM LAYERS</div>
-      <div class="section-title">A four-layer architecture</div>
-      <div class="section-subtitle center">Each layer has a single responsibility and its own scaling axis.</div>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:16px;">
-      <div class="card card-rail-orange">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange);">Layer 1</span>
-          <span style="font-weight:700; font-size:16px;">Edge &amp; Routing</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">router.go</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Postgres protocol parser, tenant-aware connection pool, query rewriter.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">limiter.go</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Per-tenant rate limit, per-query budget, slow-query kill-switch.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">auth.go</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">SCRAM-SHA-256, OIDC, IAM federation, key rotation.</div>
-          </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-cyan); background: var(--accent-cyan-dim); padding:2px 8px; border-radius:4px;">G3</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-cyan-dim); color: var(--accent-cyan); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">3</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Integration</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">Real DB</div>
         </div>
       </div>
-      <div class="card card-rail-blue">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue);">Layer 2</span>
-          <span style="font-weight:700; font-size:16px;">Query Engine</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">planner/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Cost-based plan selection across HNSW / IVF / brute-force per collection.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">executor/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Vectorized SIMD operators, GPU offload for &gt;10k candidate sets.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">reranker/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Cross-encoder reranking on FP8 weights, &lt;200µs per candidate.</div>
-          </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-green); background: var(--accent-green-dim); padding:2px 8px; border-radius:4px;">G4</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-green-dim); color: var(--accent-green); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">4</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Canary</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">1% traffic</div>
         </div>
       </div>
-      <div class="card card-rail-green">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green);">Layer 3</span>
-          <span style="font-weight:700; font-size:16px;">Index &amp; Storage</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">index/hnsw</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Mmap'd graph, lock-free upserts, incremental compaction.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">index/ivf</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">PQ-compressed centroids, 32x memory savings vs raw.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">storage/s3</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Tiered: hot (NVMe) → warm (gp3) → cold (S3 IA), driven by access stats.</div>
-          </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-purple); background: var(--accent-purple-dim); padding:2px 8px; border-radius:4px;">G5</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-purple-dim); color: var(--accent-purple); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">5</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Soak</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">30 min</div>
         </div>
       </div>
-      <div class="card card-rail-purple">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-purple-dim); color: var(--accent-purple);">Layer 4</span>
-          <span style="font-weight:700; font-size:16px;">Control Plane</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-purple); margin-bottom:4px;">scheduler/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Bin-packs query nodes onto compute pool, reschedules on hotspot detection.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-purple); margin-bottom:4px;">tenant-mgr/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Lifecycle, quota, billing meters, soft-delete &amp; restore.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-purple); margin-bottom:4px;">observability/</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">OTLP traces, RED metrics, slow-query log shipped to customer's bucket.</div>
-          </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-phase">
+        <div class="card" style="text-align:center; padding:20px 12px; position:relative; height:100%;">
+          <div style="position:absolute; top:8px; right:10px; font-size:10px; font-weight:700; color: var(--accent-gold); background: var(--accent-gold-dim); padding:2px 8px; border-radius:4px;">G6</div>
+          <div style="width:32px; height:32px; border-radius:8px; background: var(--accent-gold-dim); color: var(--accent-gold); display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; margin-bottom:8px;">6</div>
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Rollout</div>
+          <div style="font-size:11px; color: var(--text-tertiary); font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">100%</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section" id="metrics">
+  <!-- ═══ Maturity: vertical level cards with progress bars ═══ -->
+  <div class="section" id="maturity">
     <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-green);">PRODUCTION METRICS</div>
-      <div class="section-title">What customers see in practice</div>
+      <div class="section-label" style="color: var(--accent-blue);">MATURITY MODEL</div>
+      <div class="section-title">Where Tessera sits today.</div>
+      <div class="section-subtitle center">A four-level scale of how much of the deployment loop is automated. Each level locks in something the previous one didn't.</div>
     </div>
-    <div class="grid-3">
-      <div class="card">
-        <div style="font-weight:700; font-size:15px; color: var(--accent-green); margin-bottom:16px;">Latency</div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">p50</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-green);">0.8 ms</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Top-10 query, 1B-scale collection.</div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="card" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--text-tertiary); opacity:0.06;">L0</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="badge" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary); font-size:13px; font-weight:800;">L0</span>
+          <span style="font-weight:700; font-size:15px;">Manual deploys</span>
         </div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">p99</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-green);">3.2 ms</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Including cold-tier fetch worst case.</div>
+        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">SSH and a tarball. Whoever shipped last knows how it works.</div>
+          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: hero engineer</div>
         </div>
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">p99.9</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-green);">12 ms</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">SLO ceiling, breach triggers paging.</div>
+        <div class="progress-bar" style="margin-top:12px;">
+          <div class="progress-fill" style="width:0%; background: var(--text-tertiary);"></div>
         </div>
       </div>
-      <div class="card">
-        <div style="font-weight:700; font-size:15px; color: var(--accent-blue); margin-bottom:16px;">Throughput</div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">QPS / shard</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-blue);">48k</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Sustained, 16-vCPU query node.</div>
+      <div class="card" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-blue); opacity:0.06;">L1</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue); font-size:13px; font-weight:800;">L1</span>
+          <span style="font-weight:700; font-size:15px;">CI exists, CD doesn't</span>
         </div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">Ingest rate</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-blue);">120k/s</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Per shard, batched 1000-vector writes.</div>
+        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Tests run on PRs. Production still needs a human to click "Deploy".</div>
+          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: gatekeeper</div>
         </div>
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">Reranker</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-blue);">5k/s</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Per A100, cross-encoder FP8.</div>
+        <div class="progress-bar" style="margin-top:12px;">
+          <div class="progress-fill" style="width:25%; background: var(--accent-blue);"></div>
         </div>
       </div>
-      <div class="card">
-        <div style="font-weight:700; font-size:15px; color: var(--accent-purple); margin-bottom:16px;">Reliability</div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">Uptime</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-purple);">99.99%</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Trailing 90 days, multi-region.</div>
+      <div class="card" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-green); opacity:0.06;">L2</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green); font-size:13px; font-weight:800;">L2</span>
+          <span style="font-weight:700; font-size:15px;">Continuous delivery</span>
         </div>
-        <div style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">RPO</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-purple);">0 s</div>
-          </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Synchronous replication to 3 AZs.</div>
+        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Every green commit reaches a staging environment automatically. Promotion to prod is one click.</div>
+          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: reviewer</div>
         </div>
-        <div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <div style="font-size:13px; font-weight:600;">RTO</div>
-            <div style="font-size:16px; font-weight:800; color: var(--accent-purple);">&lt; 30 s</div>
+        <div class="progress-bar" style="margin-top:12px;">
+          <div class="progress-fill" style="width:50%; background: var(--accent-green);"></div>
+        </div>
+      </div>
+      <div class="card" style="border-color: var(--accent-orange); border-width:1.5px; position:relative;">
+        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-orange); opacity:0.08;">L3</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange); font-size:13px; font-weight:800;">L3</span>
+          <span style="font-weight:700; font-size:15px;">Hardened pipeline</span>
+          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange); margin-left:auto;">
+            <span style="width:6px; height:6px; border-radius:50%; background: var(--accent-orange); display:inline-block; margin-right:4px; animation: pulse 2s ease-in-out infinite;"></span>
+            current
+          </span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Six gates with hard exit codes. Canary, soak, automated rollback. Humans only intervene on failure.</div>
+          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: pipeline architect</div>
+        </div>
+        <div class="progress-bar" style="margin-top:12px;">
+          <div class="progress-fill" style="width:75%; background: var(--accent-orange);"></div>
+        </div>
+      </div>
+      <div class="card" style="position:relative;">
+        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-purple); opacity:0.06;">L4</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="badge" style="background: var(--accent-purple-dim); color: var(--accent-purple); font-size:13px; font-weight:800;">L4</span>
+          <span style="font-weight:700; font-size:15px;">Self-healing</span>
+          <span class="badge" style="background: var(--accent-purple-dim); color: var(--accent-purple); margin-left:auto;">target</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Pipeline diagnoses its own failures, reroutes around bad nodes, opens its own incident reviews.</div>
+          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: SRE strategist</div>
+        </div>
+        <div class="progress-bar" style="margin-top:12px;">
+          <div class="progress-fill" style="width:100%; background: linear-gradient(90deg, var(--accent-purple), var(--text-tertiary));"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Roadmap: vertical timeline ═══ -->
+  <div class="section" id="roadmap">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-green);">ROADMAP</div>
+      <div class="section-title">From L3 to L4.</div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <div class="timeline-item">
+        <div style="position:relative;">
+          <div class="timeline-num" style="background: var(--accent-green-dim); color: var(--accent-green);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5;">Automatic failover, no operator action.</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div style="flex:1; padding-top:2px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-weight:800; font-size:16px;">Q4 · Foundations</span>
+            <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green);">shipped</span>
+          </div>
+          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">Six-gate skeleton, hard-coded exit codes, snapshot rollback, audit trail in JSONL.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div style="position:relative;">
+          <div class="timeline-num" style="background: var(--accent-orange-dim); color: var(--accent-orange);">2</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div style="flex:1; padding-top:2px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-weight:800; font-size:16px;">Q1 · Failure analysis</span>
+            <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange);">in progress</span>
+          </div>
+          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">Auto-classify gate failures into actionable categories. Open the right runbook automatically.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div style="position:relative;">
+          <div class="timeline-num" style="background: var(--accent-blue-dim); color: var(--accent-blue);">3</div>
+          <div class="timeline-line"></div>
+        </div>
+        <div style="flex:1; padding-top:2px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-weight:800; font-size:16px;">Q2 · Heal-on-fail</span>
+            <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue);">planned</span>
+          </div>
+          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">When gate 4 (canary) detects regression, pipeline reroutes traffic, files an incident, and pages the right team — all before a human notices.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div style="position:relative;">
+          <div class="timeline-num" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary);">4</div>
+        </div>
+        <div style="flex:1; padding-top:2px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-weight:800; font-size:16px; color: var(--text-secondary);">Q3 · Cross-region orchestration</span>
+            <span class="badge" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary);">future</span>
+          </div>
+          <div style="font-size:14px; color: var(--text-tertiary); line-height:1.7;">Coordinate deploys across regions; respect blackout windows; honor regulatory holds per-jurisdiction.</div>
         </div>
       </div>
     </div>
@@ -275,11 +266,11 @@
 
   <div class="footer">
     <div style="margin-bottom:8px;">
-      <span style="font-weight:700;">VectorDB Cloud</span>
+      <span style="font-weight:700;">Tessera</span>
       <span style="margin: 0 8px; color: var(--text-tertiary);">·</span>
       <span>A demo built with the dark-tech-style skill</span>
     </div>
-    <div>This page is fictional content rendered to showcase the design system · 2026</div>
+    <div>Fictional content rendered to showcase the design system · 2026</div>
   </div>
 
 </body>

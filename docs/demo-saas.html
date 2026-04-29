@@ -3,235 +3,209 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lattice · Realtime collaboration infrastructure</title>
+  <title>Drift · Background jobs that actually finish</title>
   <link rel="stylesheet" href="../assets/tokens.css"/>
 </head>
 <body>
 
   <nav class="nav">
-    <div class="nav-logo">Lattice<span>.</span></div>
+    <div class="nav-logo">drift<span>.</span>run</div>
     <div class="nav-links">
       <a href="#why">Why</a>
-      <a href="#how">How it works</a>
+      <a href="#proof">Proof</a>
       <a href="#pricing">Pricing</a>
       <a href="#start">Start</a>
     </div>
   </nav>
 
+  <!-- ═══ Hero ═══ -->
   <div class="hero">
     <div class="hero-badge">
       <span class="dot"></span>
-      v3.0 · Edge-replicated CRDT runtime
+      Background jobs · Cron · Workflows
     </div>
     <h1>
-      Realtime collaboration<br/>
-      that <span class="grad-blue">stays consistent</span>.
+      Background jobs that<br/>
+      <span class="grad-purple">actually finish</span>.
     </h1>
     <p class="hero-desc">
-      Drop-in CRDT primitives with offline-first sync, conflict-free merges,
-      and presence built in. Replace your custom WebSocket layer with three lines
-      of code — your users get Figma-grade collaboration, you get your weekends back.
+      One API. Retries, dead-letter queues, idempotency keys, structured logs, and a UI for
+      humans — all included. Stop re-implementing the same broken queue every two years.
     </p>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-val grad-blue">42ms</div>
-        <div class="hero-stat-label">edge sync p50</div>
+        <div class="hero-stat-val grad-purple">340M</div>
+        <div class="hero-stat-label">jobs / day</div>
       </div>
       <div>
-        <div class="hero-stat-val grad-green">10M+</div>
-        <div class="hero-stat-label">concurrent users</div>
+        <div class="hero-stat-val grad-cyan" style="background: linear-gradient(135deg, var(--accent-cyan), #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">99.999%</div>
+        <div class="hero-stat-label">delivery rate</div>
       </div>
       <div>
-        <div class="hero-stat-val grad-orange">3 lines</div>
-        <div class="hero-stat-label">to integrate</div>
-      </div>
-      <div>
-        <div class="hero-stat-val grad-purple">SOC 2</div>
-        <div class="hero-stat-label">type II certified</div>
+        <div class="hero-stat-val grad-orange">24ms</div>
+        <div class="hero-stat-label">enqueue p50</div>
       </div>
     </div>
   </div>
 
+  <!-- ═══ Asymmetric why-section: 1 large + 2 small ═══ -->
   <div class="section" id="why">
     <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-blue);">WHY LATTICE</div>
-      <div class="section-title">Stop building the same thing again.</div>
-      <div class="section-subtitle center">Every collaborative product reinvents the same broken stack. Lattice is the missing primitive.</div>
+      <div class="section-label" style="color: var(--accent-purple);">WHY DRIFT</div>
+      <div class="section-title">Stop building the queue, start using it.</div>
+    </div>
+    <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:16px;">
+      <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; min-height:280px;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+            <div class="pillar-dot" style="background: var(--accent-purple);"></div>
+            <div style="font-size:11px; font-weight:600; color: var(--accent-purple); letter-spacing:0.12em; text-transform:uppercase;">The flagship feature</div>
+          </div>
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.02em; line-height:1.2; margin-bottom:12px;">Idempotency keys, finally <span class="grad-purple">handled correctly</span>.</div>
+          <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
+            Same job submitted twice? Drift recognizes the key and returns the original result.
+            Distributed across regions, durable for 30 days, and free at every plan tier.
+            No more "did we double-charge that customer?".
+          </div>
+        </div>
+        <div style="margin-top:24px; font-family: 'SF Mono', Menlo, monospace; font-size:12px; color: var(--accent-purple); background: var(--bg-surface); border-radius:8px; padding:12px 14px;">
+          <span style="color: var(--text-tertiary);">drift.enqueue</span>(job, { <span style="color: var(--accent-orange);">idempotency_key</span>: order.id })
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="flex:1;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <div class="pillar-dot" style="background: var(--accent-orange);"></div>
+            <div style="font-weight:700; font-size:14px;">Visual debugger</div>
+          </div>
+          <div style="color: var(--text-secondary); font-size:13px; line-height:1.6;">
+            Step through any failed run. See payload, stack trace, and the exact retry attempt.
+          </div>
+        </div>
+        <div class="card" style="flex:1;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <div class="pillar-dot" style="background: var(--accent-green);"></div>
+            <div style="font-weight:700; font-size:14px;">Cron with timezone awareness</div>
+          </div>
+          <div style="color: var(--text-secondary); font-size:13px; line-height:1.6;">
+            Schedule across DST boundaries without surprises. We tested every edge case so you don't have to.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Proof: side-by-side big numbers ═══ -->
+  <div class="section" id="proof">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-cyan);">PROOF</div>
+      <div class="section-title">What changed when teams switched.</div>
+      <div class="section-subtitle center">Real numbers from three customers who replaced their homegrown queue with Drift in 2026.</div>
     </div>
     <div class="grid-3">
       <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-blue);"></div>
-          <div style="font-weight:700; font-size:15px;">Conflict-free by construction</div>
+        <div style="font-size:13px; color: var(--text-tertiary); margin-bottom:12px;">acme.io · 80-person team</div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px;">
+          <div style="font-size:48px; font-weight:800; letter-spacing:-0.03em;" class="grad-orange">−87%</div>
         </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Yjs-compatible CRDT under the hood. No "last writer wins", no lost edits when two users
-          type at once. The math handles it.
-        </div>
+        <div style="font-size:13px; color: var(--text-secondary); line-height:1.6;">on-call pages from queue incidents in the first 60 days.</div>
+        <div style="margin-top:16px; padding-top:16px; border-top: 1px solid var(--border); font-size:12px; color: var(--text-tertiary); font-style: italic; line-height:1.6;">"We deleted 4,200 lines of queue glue and slept through the next outage."</div>
       </div>
       <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-green);"></div>
-          <div style="font-weight:700; font-size:15px;">Offline that actually works</div>
+        <div style="font-size:13px; color: var(--text-tertiary); margin-bottom:12px;">paperback.app · series B</div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px;">
+          <div style="font-size:48px; font-weight:800; letter-spacing:-0.03em;" class="grad-green">3.1×</div>
         </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Edits queue locally, replay on reconnect, merge cleanly. Your customer's plane WiFi
-          is no longer your problem.
-        </div>
+        <div style="font-size:13px; color: var(--text-secondary); line-height:1.6;">throughput on the same hardware after migrating from Sidekiq.</div>
+        <div style="margin-top:16px; padding-top:16px; border-top: 1px solid var(--border); font-size:12px; color: var(--text-tertiary); font-style: italic; line-height:1.6;">"The migration took an afternoon. The performance gain paid for the year."</div>
       </div>
       <div class="card">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <div class="pillar-dot" style="background: var(--accent-orange);"></div>
-          <div style="font-weight:700; font-size:15px;">Presence + cursors + audio, in one</div>
+        <div style="font-size:13px; color: var(--text-tertiary); margin-bottom:12px;">numbergarden · Y26 batch</div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px;">
+          <div style="font-size:48px; font-weight:800; letter-spacing:-0.03em;" class="grad-purple">0</div>
         </div>
-        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
-          Don't bolt on three separate vendors. Cursor positions, typing indicators, and
-          spatial audio share one transport.
-        </div>
+        <div style="font-size:13px; color: var(--text-secondary); line-height:1.6;">duplicate emails sent in 6 months. Idempotency keys did the work.</div>
+        <div style="margin-top:16px; padding-top:16px; border-top: 1px solid var(--border); font-size:12px; color: var(--text-tertiary); font-style: italic; line-height:1.6;">"Our refund volume dropped 12% the week we deployed."</div>
       </div>
     </div>
   </div>
 
-  <div class="section" id="how">
-    <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-orange);">HOW IT WORKS</div>
-      <div class="section-title">Three layers. One SDK.</div>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:16px;">
-      <div class="card card-rail-orange">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange);">SDK</span>
-          <span style="font-weight:700; font-size:16px;">Client primitives</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">useDoc()</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">React hook. One call, you get a synced shared document. Renders update on remote edits.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">usePresence()</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Live cursor positions, selection rects, typing — all in one ephemeral state.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">useHistory()</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Cmd+Z that respects collaborator boundaries. No more accidentally undoing their work.</div>
-          </div>
-        </div>
-      </div>
-      <div class="card card-rail-blue">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue);">Edge</span>
-          <span style="font-weight:700; font-size:16px;">Sync runtime</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">42 PoPs</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">User connects to nearest edge. Median RTT under 50ms anywhere with cellular.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">Multi-region quorum</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">3-region replication with 2/3 quorum write. Data center loss is invisible.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">Automatic shard split</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Hot rooms split transparently — no operator intervention needed.</div>
-          </div>
-        </div>
-      </div>
-      <div class="card card-rail-green">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-          <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green);">Storage</span>
-          <span style="font-weight:700; font-size:16px;">Durable backplane</span>
-        </div>
-        <div class="grid-3">
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">Snapshots</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Continuous, with point-in-time restore down to 1-second granularity for 30 days.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">Webhooks</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Subscribe to document events. Build the audit log, the analytics, the slack-bot.</div>
-          </div>
-          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
-            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">BYOK encryption</div>
-            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Customer-managed keys via AWS KMS, GCP KMS, or HashiCorp Vault.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- ═══ Pricing ═══ -->
   <div class="section" id="pricing">
     <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-purple);">PRICING</div>
-      <div class="section-title">Pay for connections, not seats.</div>
-      <div class="section-subtitle center">Most collaboration tools charge per seat. We charge per concurrent connection — your free tier doesn't count.</div>
+      <div class="section-label" style="color: var(--accent-orange);">PRICING</div>
+      <div class="section-title">Pay for jobs, not seats.</div>
+      <div class="section-subtitle center">No "per developer" gotcha. The whole team can use it; you only pay for the work that runs.</div>
     </div>
     <div class="grid-3">
       <div class="card">
-        <div style="font-weight:700; font-size:15px; color: var(--accent-blue); margin-bottom:8px;">Hobby</div>
-        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-blue">$0</span></div>
-        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">Forever free for side projects</div>
-        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
-          <div>· 100 concurrent connections</div>
-          <div>· 1 GB document storage</div>
-          <div>· 7-day history</div>
-          <div>· Community support</div>
+        <div style="font-weight:700; font-size:14px; color: var(--accent-blue); margin-bottom:8px; letter-spacing:0.04em; text-transform: uppercase;">Free</div>
+        <div style="font-size:40px; font-weight:800; letter-spacing:-0.03em; margin-bottom:4px;"><span class="grad-blue">$0</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:24px;">100k jobs/month forever</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13px; color: var(--text-secondary);">
+          <div>· Idempotency keys</div>
+          <div>· 7-day run history</div>
+          <div>· Web dashboard</div>
+          <div>· Community Discord</div>
         </div>
       </div>
       <div class="card" style="border-color: var(--accent-orange); border-width: 1.5px; position:relative;">
-        <span class="badge" style="position:absolute; top:16px; right:16px; background: var(--accent-orange-dim); color: var(--accent-orange);">Popular</span>
-        <div style="font-weight:700; font-size:15px; color: var(--accent-orange); margin-bottom:8px;">Team</div>
-        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-orange">$199</span><span style="font-size:14px; color: var(--text-tertiary); font-weight:500;">/mo</span></div>
-        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">For shipping production apps</div>
-        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
-          <div>· 10,000 concurrent connections</div>
-          <div>· 100 GB document storage</div>
-          <div>· 90-day history</div>
-          <div>· Slack support, 24h SLA</div>
-          <div>· Custom domain on edge</div>
+        <span class="badge" style="position:absolute; top:-10px; right:20px; background: var(--accent-orange); color: var(--bg-deepest); font-size:10px; font-weight:800; letter-spacing:0.08em;">MOST PICKED</span>
+        <div style="font-weight:700; font-size:14px; color: var(--accent-orange); margin-bottom:8px; letter-spacing:0.04em; text-transform: uppercase;">Production</div>
+        <div style="font-size:40px; font-weight:800; letter-spacing:-0.03em; margin-bottom:4px;"><span class="grad-orange">$49</span><span style="font-size:14px; color: var(--text-tertiary); font-weight:500; letter-spacing:0;">/mo</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:24px;">+ $0.10 per 1k jobs over 5M</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13px; color: var(--text-secondary);">
+          <div>· 5M jobs included</div>
+          <div>· 90-day run history</div>
+          <div>· Slack alerting</div>
+          <div>· 24h support SLA</div>
+          <div>· VPC peering</div>
         </div>
       </div>
       <div class="card">
-        <div style="font-weight:700; font-size:15px; color: var(--accent-purple); margin-bottom:8px;">Enterprise</div>
-        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-purple">Custom</span></div>
-        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">Talk to us</div>
-        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
-          <div>· Unlimited connections</div>
-          <div>· Dedicated single-tenant runtime</div>
-          <div>· On-prem option (air-gapped OK)</div>
-          <div>· 99.99% uptime SLA</div>
-          <div>· BYOK + audit log export</div>
+        <div style="font-weight:700; font-size:14px; color: var(--accent-purple); margin-bottom:8px; letter-spacing:0.04em; text-transform: uppercase;">Enterprise</div>
+        <div style="font-size:40px; font-weight:800; letter-spacing:-0.03em; margin-bottom:4px;"><span class="grad-purple">Talk</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:24px;">Custom contracts, dedicated infra</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:13px; color: var(--text-secondary);">
+          <div>· Unlimited jobs</div>
+          <div>· On-prem option</div>
+          <div>· SOC 2, HIPAA, ISO 27001</div>
+          <div>· Dedicated support engineer</div>
+          <div>· 99.99% SLA</div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ═══ Quick Start ═══ -->
   <div class="section" id="start">
     <div class="section-header-center">
       <div class="section-label" style="color: var(--accent-green);">QUICK START</div>
-      <div class="section-title">Three lines. Try it now.</div>
+      <div class="section-title">Two minutes to your first job.</div>
     </div>
     <div class="terminal" style="max-width:720px; margin:0 auto;">
       <div class="terminal-header">
         <span class="dot-yellow"></span>
-        <span style="margin-left:8px; font-size:12px; color: var(--text-tertiary); font-weight:600;">Terminal</span>
+        <span style="margin-left:8px; font-size:12px; color: var(--text-tertiary); font-weight:600;">drift.run</span>
       </div>
       <div class="terminal-body">
-        <div class="terminal-prompt">npm install @lattice/sdk</div>
-        <div class="terminal-prompt" style="margin-top:8px;">npx lattice init</div>
-        <div class="terminal-prompt" style="margin-top:8px;">npm run dev</div>
+        <div class="terminal-prompt">npm install @drift/sdk</div>
+        <div class="terminal-prompt" style="margin-top:8px;">drift login</div>
+        <div class="terminal-prompt" style="margin-top:8px;">drift jobs:create --name=send-receipt</div>
+        <div style="margin-top:16px; color: var(--text-tertiary); font-size:12px; line-height:1.7;">
+          ✓ Job <span style="color: var(--accent-green);">send-receipt</span> ready · webhook url copied to clipboard
+        </div>
       </div>
     </div>
   </div>
 
   <div class="footer">
     <div style="margin-bottom:8px;">
-      <span style="font-weight:700;">Lattice</span>
+      <span style="font-weight:700;">Drift</span>
       <span style="margin: 0 8px; color: var(--text-tertiary);">·</span>
-      <span>Built with the dark-tech-style skill — fictional product, real components</span>
+      <span>A demo built with the dark-tech-style skill</span>
     </div>
-    <div>This page is generated content used to demonstrate the design system · 2026</div>
+    <div>Fictional product, real components · 2026</div>
   </div>
 
 </body>
