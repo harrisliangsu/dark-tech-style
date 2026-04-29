@@ -115,151 +115,197 @@
     </div>
   </div>
 
-  <!-- ═══ Maturity: vertical level cards with progress bars ═══ -->
+  <!-- ═══ Maturity: where we were / are / going — asymmetric 3-col ═══ -->
   <div class="section" id="maturity">
     <div class="section-header-center">
-      <div class="section-label" style="color: var(--accent-blue);">MATURITY MODEL</div>
-      <div class="section-title">Where Tessera sits today.</div>
-      <div class="section-subtitle center">A four-level scale of how much of the deployment loop is automated. Each level locks in something the previous one didn't.</div>
+      <div class="section-label" style="color: var(--accent-blue);">MATURITY</div>
+      <div class="section-title">Where we are on the ladder.</div>
     </div>
-    <div style="display:flex; flex-direction:column; gap:12px;">
-      <div class="card" style="position:relative;">
-        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--text-tertiary); opacity:0.06;">L0</span>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-          <span class="badge" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary); font-size:13px; font-weight:800;">L0</span>
-          <span style="font-weight:700; font-size:15px;">Manual deploys</span>
+
+    <!-- Horizontal level axis -->
+    <div style="display:flex; align-items:flex-end; gap:0; margin-bottom: 40px; padding: 0 20px;">
+      <!-- L0 -->
+      <div style="flex:1; text-align:center; opacity:0.5;">
+        <div style="height: 24px; background: var(--text-tertiary); margin: 0 4px; border-radius: 3px;"></div>
+        <div style="margin-top:8px; font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.06em;">L0</div>
+        <div style="font-size:11px; color: var(--text-tertiary); margin-top:2px;">Manual</div>
+      </div>
+      <!-- L1 -->
+      <div style="flex:1; text-align:center; opacity:0.6;">
+        <div style="height: 48px; background: var(--accent-blue); margin: 0 4px; border-radius: 3px; opacity:0.4;"></div>
+        <div style="margin-top:8px; font-size:11px; font-weight:700; color: var(--accent-blue); letter-spacing:0.06em;">L1</div>
+        <div style="font-size:11px; color: var(--text-tertiary); margin-top:2px;">CI only</div>
+      </div>
+      <!-- L2 -->
+      <div style="flex:1; text-align:center; opacity:0.75;">
+        <div style="height: 80px; background: var(--accent-green); margin: 0 4px; border-radius: 3px; opacity:0.5;"></div>
+        <div style="margin-top:8px; font-size:11px; font-weight:700; color: var(--accent-green); letter-spacing:0.06em;">L2</div>
+        <div style="font-size:11px; color: var(--text-tertiary); margin-top:2px;">CD</div>
+      </div>
+      <!-- L3 — current -->
+      <div style="flex:1; text-align:center; position:relative;">
+        <div style="position:absolute; top:-30px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:800; color:var(--accent-orange); letter-spacing:0.12em; white-space:nowrap;">▼ YOU ARE HERE</div>
+        <div style="height: 120px; background: linear-gradient(180deg, var(--accent-orange), var(--accent-orange-dim)); margin: 0 4px; border-radius: 3px; box-shadow: 0 0 24px rgba(249,115,22,0.4);"></div>
+        <div style="margin-top:8px; font-size:13px; font-weight:800; color: var(--accent-orange); letter-spacing:0.06em;">L3</div>
+        <div style="font-size:12px; color: var(--text-primary); margin-top:2px; font-weight:600;">Hardened</div>
+      </div>
+      <!-- L4 -->
+      <div style="flex:1; text-align:center; opacity:0.6;">
+        <div style="height: 160px; background: var(--accent-purple); margin: 0 4px; border-radius: 3px; opacity:0.25; border: 1px dashed var(--accent-purple);"></div>
+        <div style="margin-top:8px; font-size:11px; font-weight:700; color: var(--accent-purple); letter-spacing:0.06em;">L4</div>
+        <div style="font-size:11px; color: var(--text-tertiary); margin-top:2px;">Self-heal</div>
+      </div>
+    </div>
+
+    <!-- Asymmetric detail: L3 large + flanking small -->
+    <div style="display:grid; grid-template-columns: 1fr 1.6fr 1fr; gap:16px;">
+      <!-- left: where we came from -->
+      <div style="background: var(--bg-surface); border-radius: var(--radius); padding: 20px; display:flex; flex-direction:column; gap:14px;">
+        <div style="font-size:10px; font-weight:600; color: var(--text-tertiary); letter-spacing:0.12em; text-transform:uppercase;">Behind us</div>
+        <div>
+          <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.06em;">L0 · Manual</div>
+          <div style="font-size:12px; color: var(--text-tertiary); line-height:1.5; margin-top:2px;">SSH + tarball.</div>
         </div>
-        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
-          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">SSH and a tarball. Whoever shipped last knows how it works.</div>
-          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: hero engineer</div>
+        <div>
+          <div style="font-size:11px; font-weight:700; color: var(--accent-blue); letter-spacing:0.06em;">L1 · CI only</div>
+          <div style="font-size:12px; color: var(--text-secondary); line-height:1.5; margin-top:2px;">Tests run, deploys are still manual.</div>
         </div>
-        <div class="progress-bar" style="margin-top:12px;">
-          <div class="progress-fill" style="width:0%; background: var(--text-tertiary);"></div>
+        <div>
+          <div style="font-size:11px; font-weight:700; color: var(--accent-green); letter-spacing:0.06em;">L2 · CD</div>
+          <div style="font-size:12px; color: var(--text-secondary); line-height:1.5; margin-top:2px;">Auto-deploy to staging; one-click prod.</div>
         </div>
       </div>
-      <div class="card" style="position:relative;">
-        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-blue); opacity:0.06;">L1</span>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-          <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue); font-size:13px; font-weight:800;">L1</span>
-          <span style="font-weight:700; font-size:15px;">CI exists, CD doesn't</span>
-        </div>
-        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
-          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Tests run on PRs. Production still needs a human to click "Deploy".</div>
-          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: gatekeeper</div>
-        </div>
-        <div class="progress-bar" style="margin-top:12px;">
-          <div class="progress-fill" style="width:25%; background: var(--accent-blue);"></div>
-        </div>
-      </div>
-      <div class="card" style="position:relative;">
-        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-green); opacity:0.06;">L2</span>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-          <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green); font-size:13px; font-weight:800;">L2</span>
-          <span style="font-weight:700; font-size:15px;">Continuous delivery</span>
-        </div>
-        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
-          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Every green commit reaches a staging environment automatically. Promotion to prod is one click.</div>
-          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: reviewer</div>
-        </div>
-        <div class="progress-bar" style="margin-top:12px;">
-          <div class="progress-fill" style="width:50%; background: var(--accent-green);"></div>
-        </div>
-      </div>
-      <div class="card" style="border-color: var(--accent-orange); border-width:1.5px; position:relative;">
-        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-orange); opacity:0.08;">L3</span>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange); font-size:13px; font-weight:800;">L3</span>
-          <span style="font-weight:700; font-size:15px;">Hardened pipeline</span>
+
+      <!-- center: current state highlighted -->
+      <div class="card" style="border-color: var(--accent-orange); border-width: 1.5px; padding: 28px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange); font-size:11px; font-weight:800; letter-spacing:0.06em;">CURRENT · L3</span>
           <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange); margin-left:auto;">
             <span style="width:6px; height:6px; border-radius:50%; background: var(--accent-orange); display:inline-block; margin-right:4px; animation: pulse 2s ease-in-out infinite;"></span>
-            current
+            shipped
           </span>
         </div>
-        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
-          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Six gates with hard exit codes. Canary, soak, automated rollback. Humans only intervene on failure.</div>
-          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: pipeline architect</div>
+        <div style="font-size:24px; font-weight:800; letter-spacing:-0.02em; margin-bottom:10px;">Hardened pipeline.</div>
+        <div style="font-size:14px; color: var(--text-secondary); line-height:1.7; margin-bottom:18px;">
+          Six gates with hard exit codes. Canary, soak, automated rollback.
+          Humans only intervene on failure — and the dashboard tells them which gate to look at.
         </div>
-        <div class="progress-bar" style="margin-top:12px;">
-          <div class="progress-fill" style="width:75%; background: var(--accent-orange);"></div>
+        <div style="display:flex; gap:24px; flex-wrap:wrap; padding-top:18px; border-top: 1px solid var(--border);">
+          <div>
+            <div style="font-size:24px; font-weight:800; letter-spacing:-0.02em;" class="grad-orange">11.4 min</div>
+            <div style="font-size:11px; color: var(--text-tertiary); letter-spacing:0.06em; margin-top:2px;">commit → prod</div>
+          </div>
+          <div>
+            <div style="font-size:24px; font-weight:800; letter-spacing:-0.02em;" class="grad-orange">99.7%</div>
+            <div style="font-size:11px; color: var(--text-tertiary); letter-spacing:0.06em; margin-top:2px;">first-pass rate</div>
+          </div>
+          <div>
+            <div style="font-size:24px; font-weight:800; letter-spacing:-0.02em;" class="grad-orange">0</div>
+            <div style="font-size:11px; color: var(--text-tertiary); letter-spacing:0.06em; margin-top:2px;">manual approvals</div>
+          </div>
         </div>
       </div>
-      <div class="card" style="position:relative;">
-        <span style="position:absolute; top:16px; right:16px; font-size:48px; font-weight:800; color: var(--accent-purple); opacity:0.06;">L4</span>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-          <span class="badge" style="background: var(--accent-purple-dim); color: var(--accent-purple); font-size:13px; font-weight:800;">L4</span>
-          <span style="font-weight:700; font-size:15px;">Self-healing</span>
-          <span class="badge" style="background: var(--accent-purple-dim); color: var(--accent-purple); margin-left:auto;">target</span>
-        </div>
-        <div style="display:flex; align-items:baseline; gap:24px; flex-wrap:wrap;">
-          <div style="font-size:13px; color: var(--text-secondary); flex:1; min-width:200px;">Pipeline diagnoses its own failures, reroutes around bad nodes, opens its own incident reviews.</div>
-          <div style="font-size:12px; color: var(--text-tertiary); white-space:nowrap;">role: SRE strategist</div>
-        </div>
-        <div class="progress-bar" style="margin-top:12px;">
-          <div class="progress-fill" style="width:100%; background: linear-gradient(90deg, var(--accent-purple), var(--text-tertiary));"></div>
-        </div>
+
+      <!-- right: where we're going -->
+      <div style="background: var(--bg-surface); border-radius: var(--radius); padding: 20px; border: 1px dashed var(--accent-purple); position:relative;">
+        <div style="font-size:10px; font-weight:600; color: var(--accent-purple); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px;">Ahead → L4</div>
+        <div style="font-size:16px; font-weight:800; margin-bottom:8px;">Self-healing</div>
+        <div style="font-size:12px; color: var(--text-secondary); line-height:1.6; margin-bottom:16px;">Pipeline diagnoses its own failures and reroutes around bad nodes.</div>
+        <div style="font-size:11px; color: var(--text-tertiary); letter-spacing:0.06em; margin-bottom:6px;">ETA</div>
+        <div style="font-size:14px; font-weight:700; color: var(--accent-purple);">~ 2 quarters</div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ Roadmap: vertical timeline ═══ -->
+  <!-- ═══ Roadmap: horizontal Gantt-style ═══ -->
   <div class="section" id="roadmap">
     <div class="section-header-center">
       <div class="section-label" style="color: var(--accent-green);">ROADMAP</div>
-      <div class="section-title">From L3 to L4.</div>
+      <div class="section-title">From L3 to L4 in 12 months.</div>
     </div>
-    <div style="display:flex; flex-direction:column; gap:0;">
-      <div class="timeline-item">
-        <div style="position:relative;">
-          <div class="timeline-num" style="background: var(--accent-green-dim); color: var(--accent-green);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div class="timeline-line"></div>
+
+    <!-- Quarter axis -->
+    <div style="display:grid; grid-template-columns: 60px repeat(4, 1fr); gap: 0; align-items:center; margin-bottom:8px; padding-right:8px;">
+      <div></div>
+      <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.12em; padding: 0 12px;">Q4 '26</div>
+      <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.12em; padding: 0 12px;">Q1 '27</div>
+      <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.12em; padding: 0 12px;">Q2 '27</div>
+      <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.12em; padding: 0 12px;">Q3 '27</div>
+    </div>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 24px 8px; position:relative;">
+      <!-- Vertical "now" line -->
+      <div style="position:absolute; top:24px; bottom:24px; left: calc(60px + (100% - 60px) * 0.30); width: 2px; background: var(--accent-orange); opacity: 0.4; pointer-events:none;">
+        <div style="position:absolute; top:-22px; left:-26px; font-size:9px; font-weight:800; color: var(--accent-orange); letter-spacing:0.12em; white-space:nowrap;">▼ NOW</div>
+      </div>
+
+      <!-- Foundations: Q4 fully (shipped) -->
+      <div style="display:grid; grid-template-columns: 60px repeat(4, 1fr); gap:0; align-items:center; margin-bottom:16px;">
+        <div style="font-size:11px; font-weight:700; color: var(--accent-green); letter-spacing:0.04em;">E1</div>
+        <div style="background: var(--accent-green); height: 28px; border-radius: 4px; padding: 0 12px; display:flex; align-items:center;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" style="margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-size:12px; font-weight:700; color:white;">Foundations</span>
         </div>
-        <div style="flex:1; padding-top:2px;">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <span style="font-weight:800; font-size:16px;">Q4 · Foundations</span>
-            <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green);">shipped</span>
-          </div>
-          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">Six-gate skeleton, hard-coded exit codes, snapshot rollback, audit trail in JSONL.</div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <!-- Failure analysis: Q4 end → Q1 mostly (in-progress, semi-filled) -->
+      <div style="display:grid; grid-template-columns: 60px repeat(4, 1fr); gap:0; align-items:center; margin-bottom:16px;">
+        <div style="font-size:11px; font-weight:700; color: var(--accent-orange); letter-spacing:0.04em;">E2</div>
+        <div></div>
+        <div style="background: linear-gradient(90deg, var(--accent-orange) 0%, var(--accent-orange) 60%, var(--accent-orange-dim) 60%, var(--accent-orange-dim) 100%); height: 28px; border-radius: 4px; padding: 0 12px; display:flex; align-items:center; grid-column: span 1; margin-left: -50%; margin-right: 0; position:relative;">
+          <span style="font-size:12px; font-weight:700; color:white; position:absolute; left:55%; transform: translateX(-50%); white-space: nowrap;">Failure analysis</span>
+        </div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <!-- Heal on fail: Q2 (planned) -->
+      <div style="display:grid; grid-template-columns: 60px repeat(4, 1fr); gap:0; align-items:center; margin-bottom:16px;">
+        <div style="font-size:11px; font-weight:700; color: var(--accent-blue); letter-spacing:0.04em;">E3</div>
+        <div></div>
+        <div></div>
+        <div style="background: var(--accent-blue-dim); border: 1px solid var(--accent-blue); height: 28px; border-radius: 4px; padding: 0 12px; display:flex; align-items:center;">
+          <span style="font-size:12px; font-weight:700; color: var(--accent-blue);">Heal-on-fail</span>
+        </div>
+        <div></div>
+      </div>
+
+      <!-- Cross-region: Q3 (future, dashed) -->
+      <div style="display:grid; grid-template-columns: 60px repeat(4, 1fr); gap:0; align-items:center; margin-bottom:8px;">
+        <div style="font-size:11px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.04em;">E4</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div style="background: rgba(74,78,99,0.15); border: 1px dashed var(--text-tertiary); height: 28px; border-radius: 4px; padding: 0 12px; display:flex; align-items:center;">
+          <span style="font-size:12px; font-weight:700; color: var(--text-tertiary);">Cross-region</span>
         </div>
       </div>
-      <div class="timeline-item">
-        <div style="position:relative;">
-          <div class="timeline-num" style="background: var(--accent-orange-dim); color: var(--accent-orange);">2</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div style="flex:1; padding-top:2px;">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <span style="font-weight:800; font-size:16px;">Q1 · Failure analysis</span>
-            <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange);">in progress</span>
-          </div>
-          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">Auto-classify gate failures into actionable categories. Open the right runbook automatically.</div>
-        </div>
+    </div>
+
+    <!-- Quarter detail strip below -->
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:24px;">
+      <div style="background: var(--bg-surface); border-radius: 10px; padding: 14px; border-top: 2px solid var(--accent-green);">
+        <div style="font-size:10px; font-weight:700; color: var(--accent-green); letter-spacing:0.08em; margin-bottom:6px;">SHIPPED</div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Six-gate skeleton</div>
+        <div style="font-size:11px; color: var(--text-tertiary); line-height:1.5;">Hard exit codes, snapshot rollback, JSONL audit trail.</div>
       </div>
-      <div class="timeline-item">
-        <div style="position:relative;">
-          <div class="timeline-num" style="background: var(--accent-blue-dim); color: var(--accent-blue);">3</div>
-          <div class="timeline-line"></div>
-        </div>
-        <div style="flex:1; padding-top:2px;">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <span style="font-weight:800; font-size:16px;">Q2 · Heal-on-fail</span>
-            <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue);">planned</span>
-          </div>
-          <div style="font-size:14px; color: var(--text-secondary); line-height:1.7;">When gate 4 (canary) detects regression, pipeline reroutes traffic, files an incident, and pages the right team — all before a human notices.</div>
-        </div>
+      <div style="background: var(--bg-surface); border-radius: 10px; padding: 14px; border-top: 2px solid var(--accent-orange);">
+        <div style="font-size:10px; font-weight:700; color: var(--accent-orange); letter-spacing:0.08em; margin-bottom:6px;">IN PROGRESS</div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Failure classifier</div>
+        <div style="font-size:11px; color: var(--text-tertiary); line-height:1.5;">Auto-route gate failures to the right runbook.</div>
       </div>
-      <div class="timeline-item">
-        <div style="position:relative;">
-          <div class="timeline-num" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary);">4</div>
-        </div>
-        <div style="flex:1; padding-top:2px;">
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <span style="font-weight:800; font-size:16px; color: var(--text-secondary);">Q3 · Cross-region orchestration</span>
-            <span class="badge" style="background: rgba(74,78,99,0.15); color: var(--text-tertiary);">future</span>
-          </div>
-          <div style="font-size:14px; color: var(--text-tertiary); line-height:1.7;">Coordinate deploys across regions; respect blackout windows; honor regulatory holds per-jurisdiction.</div>
-        </div>
+      <div style="background: var(--bg-surface); border-radius: 10px; padding: 14px; border-top: 2px solid var(--accent-blue);">
+        <div style="font-size:10px; font-weight:700; color: var(--accent-blue); letter-spacing:0.08em; margin-bottom:6px;">PLANNED</div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Auto-rollback canary</div>
+        <div style="font-size:11px; color: var(--text-tertiary); line-height:1.5;">Reroute traffic and page the right team before humans notice.</div>
+      </div>
+      <div style="background: var(--bg-surface); border-radius: 10px; padding: 14px; border-top: 2px dashed var(--text-tertiary); opacity: 0.6;">
+        <div style="font-size:10px; font-weight:700; color: var(--text-tertiary); letter-spacing:0.08em; margin-bottom:6px;">FUTURE</div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Cross-region orchestration</div>
+        <div style="font-size:11px; color: var(--text-tertiary); line-height:1.5;">Blackout windows, regulatory holds per-jurisdiction.</div>
       </div>
     </div>
   </div>
