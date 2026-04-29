@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lattice · Realtime collaboration infrastructure</title>
+  <link rel="stylesheet" href="../assets/tokens.css"/>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">Lattice<span>.</span></div>
+    <div class="nav-links">
+      <a href="#why">Why</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#start">Start</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      v3.0 · Edge-replicated CRDT runtime
+    </div>
+    <h1>
+      Realtime collaboration<br/>
+      that <span class="grad-blue">stays consistent</span>.
+    </h1>
+    <p class="hero-desc">
+      Drop-in CRDT primitives with offline-first sync, conflict-free merges,
+      and presence built in. Replace your custom WebSocket layer with three lines
+      of code — your users get Figma-grade collaboration, you get your weekends back.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val grad-blue">42ms</div>
+        <div class="hero-stat-label">edge sync p50</div>
+      </div>
+      <div>
+        <div class="hero-stat-val grad-green">10M+</div>
+        <div class="hero-stat-label">concurrent users</div>
+      </div>
+      <div>
+        <div class="hero-stat-val grad-orange">3 lines</div>
+        <div class="hero-stat-label">to integrate</div>
+      </div>
+      <div>
+        <div class="hero-stat-val grad-purple">SOC 2</div>
+        <div class="hero-stat-label">type II certified</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="why">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-blue);">WHY LATTICE</div>
+      <div class="section-title">Stop building the same thing again.</div>
+      <div class="section-subtitle center">Every collaborative product reinvents the same broken stack. Lattice is the missing primitive.</div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="pillar-dot" style="background: var(--accent-blue);"></div>
+          <div style="font-weight:700; font-size:15px;">Conflict-free by construction</div>
+        </div>
+        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
+          Yjs-compatible CRDT under the hood. No "last writer wins", no lost edits when two users
+          type at once. The math handles it.
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="pillar-dot" style="background: var(--accent-green);"></div>
+          <div style="font-weight:700; font-size:15px;">Offline that actually works</div>
+        </div>
+        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
+          Edits queue locally, replay on reconnect, merge cleanly. Your customer's plane WiFi
+          is no longer your problem.
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="pillar-dot" style="background: var(--accent-orange);"></div>
+          <div style="font-weight:700; font-size:15px;">Presence + cursors + audio, in one</div>
+        </div>
+        <div style="color: var(--text-secondary); font-size:14px; line-height:1.7;">
+          Don't bolt on three separate vendors. Cursor positions, typing indicators, and
+          spatial audio share one transport.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="how">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-orange);">HOW IT WORKS</div>
+      <div class="section-title">Three layers. One SDK.</div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div class="card card-rail-orange">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+          <span class="badge" style="background: var(--accent-orange-dim); color: var(--accent-orange);">SDK</span>
+          <span style="font-weight:700; font-size:16px;">Client primitives</span>
+        </div>
+        <div class="grid-3">
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">useDoc()</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">React hook. One call, you get a synced shared document. Renders update on remote edits.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">usePresence()</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Live cursor positions, selection rects, typing — all in one ephemeral state.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-orange); margin-bottom:4px;">useHistory()</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Cmd+Z that respects collaborator boundaries. No more accidentally undoing their work.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-rail-blue">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+          <span class="badge" style="background: var(--accent-blue-dim); color: var(--accent-blue);">Edge</span>
+          <span style="font-weight:700; font-size:16px;">Sync runtime</span>
+        </div>
+        <div class="grid-3">
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">42 PoPs</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">User connects to nearest edge. Median RTT under 50ms anywhere with cellular.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">Multi-region quorum</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">3-region replication with 2/3 quorum write. Data center loss is invisible.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-blue); margin-bottom:4px;">Automatic shard split</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Hot rooms split transparently — no operator intervention needed.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-rail-green">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+          <span class="badge" style="background: var(--accent-green-dim); color: var(--accent-green);">Storage</span>
+          <span style="font-weight:700; font-size:16px;">Durable backplane</span>
+        </div>
+        <div class="grid-3">
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">Snapshots</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Continuous, with point-in-time restore down to 1-second granularity for 30 days.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">Webhooks</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Subscribe to document events. Build the audit log, the analytics, the slack-bot.</div>
+          </div>
+          <div style="background: var(--bg-surface); border-radius:10px; padding:14px;">
+            <div class="mono" style="font-weight:600; font-size:13px; color: var(--accent-green); margin-bottom:4px;">BYOK encryption</div>
+            <div style="font-size:12px; color: var(--text-secondary); line-height:1.6;">Customer-managed keys via AWS KMS, GCP KMS, or HashiCorp Vault.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="pricing">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-purple);">PRICING</div>
+      <div class="section-title">Pay for connections, not seats.</div>
+      <div class="section-subtitle center">Most collaboration tools charge per seat. We charge per concurrent connection — your free tier doesn't count.</div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-weight:700; font-size:15px; color: var(--accent-blue); margin-bottom:8px;">Hobby</div>
+        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-blue">$0</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">Forever free for side projects</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
+          <div>· 100 concurrent connections</div>
+          <div>· 1 GB document storage</div>
+          <div>· 7-day history</div>
+          <div>· Community support</div>
+        </div>
+      </div>
+      <div class="card" style="border-color: var(--accent-orange); border-width: 1.5px; position:relative;">
+        <span class="badge" style="position:absolute; top:16px; right:16px; background: var(--accent-orange-dim); color: var(--accent-orange);">Popular</span>
+        <div style="font-weight:700; font-size:15px; color: var(--accent-orange); margin-bottom:8px;">Team</div>
+        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-orange">$199</span><span style="font-size:14px; color: var(--text-tertiary); font-weight:500;">/mo</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">For shipping production apps</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
+          <div>· 10,000 concurrent connections</div>
+          <div>· 100 GB document storage</div>
+          <div>· 90-day history</div>
+          <div>· Slack support, 24h SLA</div>
+          <div>· Custom domain on edge</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-weight:700; font-size:15px; color: var(--accent-purple); margin-bottom:8px;">Enterprise</div>
+        <div style="font-size:36px; font-weight:800; letter-spacing:-0.02em; margin-bottom:4px;"><span class="grad-purple">Custom</span></div>
+        <div style="font-size:12px; color: var(--text-tertiary); margin-bottom:20px;">Talk to us</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color: var(--text-secondary);">
+          <div>· Unlimited connections</div>
+          <div>· Dedicated single-tenant runtime</div>
+          <div>· On-prem option (air-gapped OK)</div>
+          <div>· 99.99% uptime SLA</div>
+          <div>· BYOK + audit log export</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="start">
+    <div class="section-header-center">
+      <div class="section-label" style="color: var(--accent-green);">QUICK START</div>
+      <div class="section-title">Three lines. Try it now.</div>
+    </div>
+    <div class="terminal" style="max-width:720px; margin:0 auto;">
+      <div class="terminal-header">
+        <span class="dot-yellow"></span>
+        <span style="margin-left:8px; font-size:12px; color: var(--text-tertiary); font-weight:600;">Terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-prompt">npm install @lattice/sdk</div>
+        <div class="terminal-prompt" style="margin-top:8px;">npx lattice init</div>
+        <div class="terminal-prompt" style="margin-top:8px;">npm run dev</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div style="margin-bottom:8px;">
+      <span style="font-weight:700;">Lattice</span>
+      <span style="margin: 0 8px; color: var(--text-tertiary);">·</span>
+      <span>Built with the dark-tech-style skill — fictional product, real components</span>
+    </div>
+    <div>This page is generated content used to demonstrate the design system · 2026</div>
+  </div>
+
+</body>
+</html>

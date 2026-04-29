@@ -1,16 +1,29 @@
+<div align="right">
+
+**English** · [简体中文](README.zh.md)
+
+</div>
+
 # dark-tech-style
 
 A Claude Code / Claude.ai skill that gives Claude a complete, opinionated visual style for building dark-themed technical web pages: architecture overviews, product showcases, dashboards, roadmaps, technical landing pages, one-pagers.
 
-> 暗色科技风 HTML 一页应用的视觉风格系统。架构图、技术全景页、Landing、Dashboard、Roadmap、技术汇报页 — 一句话需求出一份风格统一的成品。
+![Style fingerprint](docs/preview.png)
+
+> A fictional "VectorDB Cloud" architecture page rendered from [`docs/demo.html`](docs/demo.html), built entirely from this skill's tokens and components.
 
 ## What you get
 
-A signature aesthetic: near-black 4-level background, barely-there 6% borders, ultra-tight 800-weight headlines, 7-color accent palette with `dim` variants, glassmorphic nav, gradient stat numbers, and 14 ready-to-use component classes.
+A signature aesthetic: near-black 4-level background, barely-there 6% borders, ultra-tight 800-weight headlines, a 7-color accent palette with `dim` variants, glassmorphic nav, gradient stat numbers, and 14 ready-to-use component classes.
 
-![Style fingerprint](docs/preview.png)
+## Gallery
 
-> Above: a fictional "VectorDB Cloud" architecture page rendered from [`docs/demo.html`](docs/demo.html), built entirely with the tokens and components in this skill.
+Same skill, different content. Both pages were generated from `assets/tokens.css` + `assets/starter.html`, no per-page custom CSS.
+
+| [Architecture overview](docs/demo.html) | [SaaS landing](docs/demo-saas.html) |
+|---|---|
+| ![Architecture demo](docs/preview.png) | ![SaaS landing demo](docs/preview-saas.png) |
+| 6-stage pipeline · layered architecture · KPI grids | hero stats · feature triad · pricing tiers · terminal CTA |
 
 ## Style fingerprint
 
@@ -31,7 +44,7 @@ A signature aesthetic: near-black 4-level background, barely-there 6% borders, u
 git clone https://github.com/harrisliangsu/dark-tech-style.git ~/.claude/skills/dark-tech-style
 ```
 
-Or symlink from a clone elsewhere:
+Or clone elsewhere and symlink:
 
 ```bash
 git clone https://github.com/harrisliangsu/dark-tech-style.git ~/dev/repo/dark-tech-style
@@ -58,7 +71,7 @@ The skill auto-triggers and Claude will pull the design tokens, pick an accent c
 You can also invoke it explicitly:
 
 ```
-/dark-tech-style 帮我做一个 KMS 系统的架构全景页
+/dark-tech-style help me build an architecture page for a KMS system
 ```
 
 ## Repository layout
@@ -69,7 +82,13 @@ dark-tech-style/
 ├── assets/
 │   ├── tokens.css        # CSS variables + 14 component classes
 │   └── starter.html      # section skeletons (hero / cards / layers / timeline / terminal)
-├── README.md
+├── docs/
+│   ├── demo.html         # architecture overview example
+│   ├── demo-saas.html    # SaaS landing example
+│   ├── preview.png       # rendered architecture preview
+│   └── preview-saas.png  # rendered SaaS landing preview
+├── README.md             # English
+├── README.zh.md          # 简体中文
 └── LICENSE
 ```
 
