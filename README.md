@@ -61,10 +61,10 @@ Upload the directory as a custom skill via Settings → Skills.
 
 Just describe what you want to build:
 
-- "做一个架构图，6 个阶段流水线，附路线图"
+- "Architecture page, 6-stage pipeline, with a roadmap"
 - "Landing page for an AI coding agent, dark theme, 4 hero stats"
-- "技术汇报一页应用，3 层架构 + 防御机制 + KPI"
-- "Dashboard 概览页，深色科技风"
+- "Tech briefing one-pager: 3-layer architecture + defense mechanisms + KPIs"
+- "Dashboard overview, dark tech style"
 
 The skill auto-triggers and Claude will pull the design tokens, pick an accent color per section, and output a single-file HTML page using the component recipes.
 
@@ -88,7 +88,7 @@ dark-tech-style/
 │   ├── preview.png       # rendered architecture preview
 │   └── preview-saas.png  # rendered SaaS landing preview
 ├── README.md             # English
-├── README.zh.md          # 简体中文
+├── README.zh.md          # Simplified Chinese
 └── LICENSE
 ```
 

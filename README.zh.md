@@ -62,7 +62,7 @@ ln -s ~/dev/repo/dark-tech-style ~/.claude/skills/dark-tech-style
 直接描述你想要什么：
 
 - "做一个架构图，6 个阶段流水线，附路线图"
-- "Landing page for an AI coding agent, dark theme, 4 hero stats"
+- "做一个 AI 编码 agent 的 Landing 页，暗色主题，4 个 hero 数字"
 - "技术汇报一页应用，3 层架构 + 防御机制 + KPI"
 - "Dashboard 概览页，深色科技风"
 
