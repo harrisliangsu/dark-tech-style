@@ -10,7 +10,7 @@ A signature aesthetic: near-black 4-level background, barely-there 6% borders, u
 
 ![Style fingerprint](docs/preview.png)
 
-<!-- If you'd like a screenshot here, render assets/starter.html and replace docs/preview.png. -->
+> Above: a fictional "VectorDB Cloud" architecture page rendered from [`docs/demo.html`](docs/demo.html), built entirely with the tokens and components in this skill.
 
 ## Style fingerprint
 
