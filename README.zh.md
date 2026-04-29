@@ -8,9 +8,9 @@
 
 一个 Claude Code / Claude.ai 技能，给 Claude 装上一套完整的、有主见的暗色科技风视觉语言。用来生成架构图、技术全景页、产品 Landing、Dashboard、Roadmap、技术汇报页 —— **一句话需求出一份风格统一的成品**。
 
-![风格指纹](docs/preview.png)
+![风格指纹](docs/preview-hero.png)
 
-> 上图是 [`docs/demo.html`](docs/demo.html) 渲染出的虚构 "VectorDB Cloud" 架构页，完全用本技能的 token 和组件搭出来。
+> 上图是 [`docs/demo.html`](docs/demo.html) 的 hero —— 虚构的 "Tessera" 部署流水线页，完全用本技能的 token 和组件搭出来。完整 demo 和 SaaS 变体见下方 Gallery。
 
 ## 这套技能给你什么
 
@@ -20,10 +20,10 @@
 
 同一套技能，完全不同的内容。两个页面都来自 `assets/tokens.css` + `assets/starter.html`，没有任何页面级自定义 CSS。
 
-| [架构全景页](docs/demo.html) | [SaaS Landing 页](docs/demo-saas.html) |
+| [Tessera · 部署流水线](docs/demo.html) | [Drift · SaaS Landing](docs/demo-saas.html) |
 |---|---|
-| ![架构 Demo](docs/preview.png) | ![SaaS Landing Demo](docs/preview-saas.png) |
-| 6 阶段流水线 · 分层架构 · KPI 卡片网格 | Hero 数字 · 三栏卖点 · 三档定价 · 终端 CTA |
+| ![Tessera Demo](docs/preview.png) | ![Drift Demo](docs/preview-saas.png) |
+| 工程过程调性：横向 6 阶段流水线 · 不对称成熟度阶梯（带 "现在位置"高亮）· 横向 Gantt 路线图。 | 产品营销调性：Trusted-by logo 条 · 不对称 1+2 卖点布局（含代码片段）· 大数字社会证明 · 三档定价 · 终端 CTA。 |
 
 ## 风格指纹
 

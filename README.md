@@ -8,9 +8,9 @@
 
 A Claude Code / Claude.ai skill that gives Claude a complete, opinionated visual style for building dark-themed technical web pages: architecture overviews, product showcases, dashboards, roadmaps, technical landing pages, one-pagers.
 
-![Style fingerprint](docs/preview.png)
+![Style fingerprint](docs/preview-hero.png)
 
-> A fictional "VectorDB Cloud" architecture page rendered from [`docs/demo.html`](docs/demo.html), built entirely from this skill's tokens and components.
+> Hero of [`docs/demo.html`](docs/demo.html) — a fictional "Tessera" deploy-pipeline page rendered entirely from this skill's tokens and components. See the full demo and the SaaS variant in the gallery below.
 
 ## What you get
 
@@ -20,10 +20,10 @@ A signature aesthetic: near-black 4-level background, barely-there 6% borders, u
 
 Same skill, different content. Both pages were generated from `assets/tokens.css` + `assets/starter.html`, no per-page custom CSS.
 
-| [Architecture overview](docs/demo.html) | [SaaS landing](docs/demo-saas.html) |
+| [Tessera · deploy pipeline](docs/demo.html) | [Drift · SaaS landing](docs/demo-saas.html) |
 |---|---|
-| ![Architecture demo](docs/preview.png) | ![SaaS landing demo](docs/preview-saas.png) |
-| 6-stage pipeline · layered architecture · KPI grids | hero stats · feature triad · pricing tiers · terminal CTA |
+| ![Tessera demo](docs/preview.png) | ![Drift demo](docs/preview-saas.png) |
+| Engineering-process feel: horizontal 6-stage pipeline, asymmetric maturity ladder with "you-are-here" highlight, horizontal Gantt roadmap with quarter columns. | Product-marketing feel: trusted-by logo strip, asymmetric 1-large + 2-small feature highlight with code snippet, big-number social proof, 3-tier pricing, terminal CTA. |
 
 ## Style fingerprint
 
